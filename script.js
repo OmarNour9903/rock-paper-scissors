@@ -1,6 +1,7 @@
 let playerScore = 0;
 let computerScore = 0;
 let isPlaying = false;
+let gameOver = false;
 
 // AudioContext object
 // صوت بيتوافق مع المتصفحات القديمه والجديده
@@ -83,31 +84,28 @@ function showCelebration(emoji) {
 }
 
 function playGame(playerChoice) {
-    // بيمنع الضغط على الأزرار أكتر من مرة بسرعة طول م اللعبه لسه بتحسب
-    if (isPlaying) return;
+    if (isPlaying || gameOver) return; // لو اللعبة شغالة أو خلصت، متعملش حاجة
     isPlaying = true;
 
-    // هناا الكمبيوتر بيختار بشكل عشوائي من الobject
     const choices = ['rock', 'paper', 'scissors'];
     const computerChoice = choices[Math.floor(Math.random() * 3)];
     const resultDiv = document.getElementById('result');
 
-    // هناا بيشيل التحديد القديم
+    // شيل التحديد القديم
     document.querySelectorAll('.choice').forEach(choice => {
         choice.classList.remove('selected', 'computer-selected');
     });
 
-    // يضيف كلاس selected على العنصر اللي اللاعب اختاره، علشان يبان عليه الاستايل بتاعه 
+    // يحدد اختيار اللاعب
     document.querySelector(`[data-choice="${playerChoice}"]`).classList.add('selected');
 
-    // الرساله اللي هتظهر لغايه م الكمبيوتر يختار
+    // يظهر رسالة مؤقتة إن الكمبيوتر بيفكر
     resultDiv.textContent = "Computer is choosing...";
     resultDiv.className = 'game-result computer-thinking';
 
-    
     setTimeout(() => {
-        // بعد 1.5 ثانية(1500): يبدأ تحديد النتيجة بتاعت الكمبيوتر
-        document.querySelector(`[data-choice="${computerChoice}"]`).classList.add('computer-selected'); 
+        // بعد 1.5 ثانية، الكمبيوتر يختار
+        document.querySelector(`[data-choice="${computerChoice}"]`).classList.add('computer-selected');
 
         let result, resultClass, soundType, celebrationEmoji;
 
@@ -138,23 +136,21 @@ function playGame(playerChoice) {
 
         resultDiv.textContent = result;
         resultDiv.className = `game-result ${resultClass}`;
-
-        // يضيف صوت النتيجة
         playSound(soundType);
-        // يضيف الايموجي 
         showCelebration(celebrationEmoji);
 
-        // هنا لازم حد يجيب 5 عشان يكسب
+        // لو حد وصل لـ 5 نقاط
         if (playerScore === 5 || computerScore === 5) {
-            const finalMessage = playerScore === 5 ? "You won the game 🤩" : "Computer won the game 😓";
+            const finalMessage = playerScore === 5
+                ? "You won the game 🤩"
+                : "Computer won the game 😓";
 
-            // هناا بعد (2200) ثانيه يظهر النتيجه النهائيه
             setTimeout(() => {
-                document.getElementById("final").textContent = finalMessage
-                resetGame();
+                document.getElementById("final").textContent = finalMessage;
+                gameOver = true;
             }, 2200);
-        } // يرجّع اللعبة جاهزة للجولة اللي بعدها، ويخلّي الزرار يشتغل تاني
-        else {
+        } else {
+            // يرجّع اللعبة تاني بعد 2 ثانية
             setTimeout(() => {
                 isPlaying = false;
                 document.querySelectorAll('.choice').forEach(choice => {
@@ -162,7 +158,6 @@ function playGame(playerChoice) {
                 });
             }, 2000);
         }
-
     }, 1500);
 }
 
@@ -179,6 +174,8 @@ function resetGame() {
         choice.classList.remove('selected', 'computer-selected');
     });
 
+    document.getElementById('final').textContent = ''; // اخفاء الرسالة بعد الريست
+    gameOver = false; // يرجّع التحكم في اللعب
     isPlaying = false;
 }
 
