@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Task Day 8</title>
+</head>
+<body>
+    
+    <div class="game-container">
+        <h1 class="title">Rock ✊, Paper 🤚, or Scissors ✌?</h1>
+        
+        <div class="choices">
+            <div class="choice" data-choice="rock">
+                <div class="choice-icon">✊</div>
+                <div class="choice-label">ROCK</div>
+            </div>
+            <div class="choice" data-choice="paper">
+                <div class="choice-icon">🤚</div>
+                <div class="choice-label">PAPER</div>
+            </div>
+            <div class="choice" data-choice="scissors">
+                <div class="choice-icon">✌</div>
+                <div class="choice-label">SCISSORS</div>
+            </div>
+        </div>
+
+        <div class="game-result" id="result"></div>
+        <div class="game-final" id="final"></div>
+
+        <div class="scores">
+            <div class="score">
+                <div class="score-label">Your Score:</div>
+                <div class="score-value" id="playerScore">0</div>
+            </div>
+            <div class="score">
+                <div class="score-label">Computer Score:</div>
+                <div class="score-value" id="computerScore">0</div>
+            </div>
+        </div>
+
+        <button type="button" class="reset-btn" onclick="resetGame()"> Reset</button>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
