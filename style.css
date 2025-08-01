@@ -1,73 +1,143 @@
+/*
+    تهيئة عامة
+*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/*
+    تنسيق الجسم (الخلفية والتحكم بالعرض)
+*/
 body {
-  background-image: url(./canva-blue-space-starfield-MAEJRLXs7pI.jpg);
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #001510);
+  background-size: 400% 400%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   position: relative;
+  overflow-x: hidden;
+  padding: 0.5rem;
 }
 
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
+/*
+    الحاوية الرئيسية للعبة
+*/
 .game-container {
   text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 25px;
-  padding: 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  max-width: 600px;
-  width: 90%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 500px;
+  backdrop-filter: blur(5px);
 }
 
+/*
+    عنوان اللعبة
+*/
 .title {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
   animation: glow 2s ease-in-out infinite alternate;
+  color: #fff;
+  position: relative;
+  padding-bottom: 0.5rem;
 }
 
+.title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #ffcc00, transparent);
+  border-radius: 50%;
+}
+
+/*
+    حركة توهج العنوان
+*/
 @keyframes glow {
   from {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
   }
   to {
-    text-shadow: 0 0 30px rgba(255, 255, 255, 1),
-      0 0 40px rgba(147, 0, 211, 0.8);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1),
+      0 0 30px rgba(255, 204, 0, 0.8);
   }
 }
 
+/*
+    أقسام اللاعبين (اللاعب والكمبيوتر)
+*/
+.players-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.player-section {
+  padding: 0.8rem;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-section.active {
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+  border-color: rgba(255, 204, 0, 0.2);
+}
+
+/*
+    عنوان اللاعب أو الكمبيوتر
+*/
+.player-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: #ffcc00;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+}
+
+.player-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #ffcc00, transparent);
+}
+
+/*
+    اختيارات اللعبة (حجر - ورقة - مقص)
+*/
 .choices {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin: 40px 0;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
   flex-wrap: wrap;
 }
 
 .choice {
-  width: 120px;
-  height: 120px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
+  width: calc((100% - 1rem) / 3);
+  height: 90px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -79,37 +149,44 @@ body {
 }
 
 .choice:hover {
-  transform: translateY(-10px) scale(1.05);
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-5px) scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+/*
+    تأثيرات عند تحديد الاختيار
+*/
 .choice.selected {
   animation: pulse 0.6s ease;
-  background: rgba(147, 0, 211, 0.4);
-  border-color: #9300d3;
+  background: rgba(0, 150, 255, 0.4);
+  border-color: #0096ff;
 }
 
 .choice.computer-selected {
   animation: computerPulse 0.6s ease;
-  background: rgba(255, 20, 147, 0.4);
-  border-color: #ff1493;
+  background: rgba(255, 50, 50, 0.4);
+  border-color: #ff3232;
 }
 
+/*
+    تقييد تفاعل الكمبيوتر (عشان ميتفاعلش مع الكلك)
+*/
+.computer-choice {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.computer-choice:hover {
+  transform: none;
+}
+
+/*
+    حركات التفاعل (نبض، هزة، فلاش)
+*/
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes computerPulse {
   0% {
     transform: scale(1);
   }
@@ -121,52 +198,96 @@ body {
   }
 }
 
+@keyframes computerPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*
+    الأيقونة والاسم داخل كل اختيار
+*/
 .choice-icon {
-  font-size: 3rem;
-  margin-bottom: 8px;
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+  transition: all 0.3s ease;
 }
 
 .choice-label {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
 }
 
-.game-result,
-.game-final {
-  margin: 10px 0;
+/*
+    كلمة VS بين اللاعبين
+*/
+.vs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 2rem;
   font-weight: bold;
-  min-height: 30px;
+  color: #ff3232;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  margin: 0.3rem 0;
+}
+
+/*
+    نتيجة الجولة أو النتيجة النهائية
+*/
+.game-result,
+.game-final {
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  min-height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
+/*
+    تنسيقات مختلفة حسب نوع النتيجة
+*/
 .result-win {
-  color: #00ff00;
+  color: #00ff8c;
   animation: winGlow 1s ease-in-out;
+  background: rgba(0, 255, 140, 0.1);
 }
 
 .result-lose {
   color: #ff4444;
   animation: loseShake 0.8s ease-in-out;
+  background: rgba(255, 68, 68, 0.1);
 }
 
 .result-tie {
-  color: #ffaa00;
+  color: #ffcc00;
   animation: tieFlash 1s ease-in-out;
+  background: rgba(255, 204, 0, 0.1);
 }
 
+/*
+    حركات خاصة بنتائج الفوز أو الخسارة أو التعادل
+*/
 @keyframes winGlow {
   0%,
   100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
-    text-shadow: 0 0 20px #00ff00;
+    transform: scale(1.05);
+    text-shadow: 0 0 15px #00ff8c;
   }
 }
 
@@ -176,10 +297,10 @@ body {
     transform: translateX(0);
   }
   25% {
-    transform: translateX(-10px);
+    transform: translateX(-5px);
   }
   75% {
-    transform: translateX(10px);
+    transform: translateX(5px);
   }
 }
 
@@ -193,111 +314,104 @@ body {
   }
 }
 
+/*
+    صندوق النقاط
+*/
 .scores {
   display: flex;
   justify-content: space-around;
-  margin: 30px 0;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  border-radius: 15px;
+  margin: 1rem 0;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .score {
   text-align: center;
+  padding: 0 0.5rem;
 }
 
 .score-label {
-  font-size: 1.1rem;
-  margin-bottom: 5px;
-  opacity: 0.9;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  color: #ffcc00;
 }
 
 .score-value {
   font-size: 2rem;
   font-weight: bold;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/*
+    زر إعادة التشغيل
+*/
 .reset-btn {
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
   border: none;
-  padding: 15px 30px;
+  padding: 0.9rem 1.5rem;
   border-radius: 25px;
   color: white;
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 0.8rem;
+  letter-spacing: 1px;
+  width: 100%;
+  max-width: 250px;
+  margin: 0.8rem auto 0;
 }
 
 .reset-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
-.computer-thinking {
-  animation: thinking 1s ease-in-out infinite;
-}
-
-@keyframes thinking {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.celebration {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 4rem;
-  animation: celebrate 2s ease-out;
-  pointer-events: none;
-  z-index: 1000;
-}
-
-@keyframes celebrate {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-  20% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1) translateY(-100px);
-  }
-}
-
-@media (max-width: 480px) {
-  .choice {
-    width: 90px;
-    height: 90px;
-  }
-  .choice-icon {
-    font-size: 2rem;
-  }
+/*
+    تحسين المظهر في الشاشات الصغيرة جدًا
+*/
+@media (max-width: 390px) {
   .title {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .scores {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    font-size: 1.6rem;
   }
 
-  .reset-btn {
-    width: 100%;
-    margin-top: 20px;
+  .player-title {
+    font-size: 1rem;
+  }
+
+  .choice {
+    height: 80px;
+  }
+
+  .choice-icon {
+    font-size: 1.5rem;
+  }
+
+  .game-result,
+  .game-final {
+    font-size: 1rem;
+    margin: 0.2rem 0;
+  }
+
+  .score-label {
+    font-size: 0.6rem;
+  }
+
+  .score-value {
+    font-size: 1.5rem;
+    width: 45px;
+    height: 45px;
   }
 }
